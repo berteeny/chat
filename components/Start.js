@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   chatButton: {
-    marginTop: 350,
+    marginTop: 300,
     borderRadius: 10,
     padding: 5,
   },
