@@ -33,6 +33,8 @@ const Start = ({ navigation }) => {
             value={name}
             onChangeText={setName}
             placeholder="Your name"
+            accessibilityLabel="input"
+            accessibilityHint="Displays your name on the top of the chat screen"
           />
 
           {/* choose colors container */}
@@ -40,22 +42,42 @@ const Start = ({ navigation }) => {
             <Text>Choose your background color</Text>
             <View style={styles.colorsContainer}>
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Background color button"
+                accessibilityHint="Lets you choose this background color"
+                accessibilityRole="button"
                 style={[styles.colorButton, { backgroundColor: "#542344" }]}
                 onPress={() => setBackgroundColor("#542344")}
               ></TouchableOpacity>
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Background color button"
+                accessibilityHint="Lets you choose this background color"
+                accessibilityRole="button"
                 style={[styles.colorButton, { backgroundColor: "#BFD1E5" }]}
                 onPress={() => setBackgroundColor("#BFD1E5")}
               ></TouchableOpacity>
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Background color button"
+                accessibilityHint="Lets you choose this background color"
+                accessibilityRole="button"
                 style={[styles.colorButton, { backgroundColor: "#EBF5EE" }]}
                 onPress={() => setBackgroundColor("#EBF5EE")}
               ></TouchableOpacity>
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Background color button"
+                accessibilityHint="Lets you choose this background color"
+                accessibilityRole="button"
                 style={[styles.colorButton, { backgroundColor: "#D8BFAA" }]}
                 onPress={() => setBackgroundColor("#D8BFAA")}
               ></TouchableOpacity>
               <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Background color button"
+                accessibilityHint="Lets you choose this background color"
+                accessibilityRole="button"
                 style={[styles.colorButton, { backgroundColor: "#808080" }]}
                 onPress={() => setBackgroundColor("#808080")}
               ></TouchableOpacity>
@@ -66,6 +88,7 @@ const Start = ({ navigation }) => {
           <View style={styles.chatButton}>
             <Button
               title="Enter the chatroom"
+              accessibilityLabel="Tap to enter the chatroom"
               color="#542344"
               onPress={() =>
                 navigation.navigate("Chat", {
