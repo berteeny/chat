@@ -7,16 +7,15 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { collection, query, orderBy, addDoc, onSnapshot } from "firebase/firestore";
 
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   const [messages, setMessages] = useState([]);
-  const { name, backgroundColor } = route.params;
+  const { name, backgroundColor, userID } = route.params;
 
-  //adds old messages and new message into new state upon state change
+  //adds new messages to db when sent
   const onSend = (newMessages) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, newMessages)
-    );
+    addDoc(collection(db, "messages"), newMessages[0]);
   };
 
   //changes to color of message bubbles
@@ -36,31 +35,33 @@ const Chat = ({ route, navigation }) => {
     );
   };
 
-  //first message after app is mounted
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello!",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-      {
-        _id: 2,
-        text: "You have entered the chat",
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
-  }, []);
-
-  //sats app title to user's name
-  useEffect(() => {
+    //sets screen title to name
     navigation.setOptions({ title: name });
+
+    //gets messages from db
+    const getMessages = query(
+      collection(db, "messages"),
+      orderBy("createdAt", "desc")
+    );
+
+    //updates db with new messages and displays them
+    const unsubMessages = onSnapshot(getMessages, (docs) => {
+      let newMessages = [];
+      docs.forEach((doc) => {
+        newMessages.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: new Date(doc.data().createdAt.toMillis()),
+        });
+      });
+      setMessages(newMessages);
+    });
+
+    //stops listening for new data
+    return () => {
+      if (unsubMessages) unsubMessages();
+    };
   }, []);
 
   return (
@@ -70,7 +71,8 @@ const Chat = ({ route, navigation }) => {
         renderBubble={renderBubble}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: userID,
+          name: name,
         }}
       />
       {Platform.OS === "android" ? (

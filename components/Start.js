@@ -6,14 +6,34 @@ import {
   TextInput,
   ImageBackground,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useState } from "react";
+import { getAuth, signInAnonymously } from "firebase/auth";
+import { LogBox } from "react-native";
+
+//ignores warning message not needed
+LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 
 const Start = ({ navigation }) => {
   //  colors = ["#542344", "#BFD1E5", "#EBF5EE", "#D8BFAA", "#808080"];
-
+  const auth = getAuth();
   const [name, setName] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("");
+
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then((result) => {
+        navigation.navigate("Chat", {
+          userID: result.user.uid,
+          name: name,
+          backgroundColor: backgroundColor,
+        });
+      })
+      .catch((error) => {
+        Alert.alert("Unable to sign in, please try again.");
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -90,12 +110,7 @@ const Start = ({ navigation }) => {
               title="Enter the chatroom"
               accessibilityLabel="Tap to enter the chatroom"
               color="#542344"
-              onPress={() =>
-                navigation.navigate("Chat", {
-                  name: name,
-                  backgroundColor: backgroundColor,
-                })
-              }
+              onPress={signInUser}
             />
           </View>
         </View>
