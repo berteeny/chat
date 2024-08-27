@@ -1,6 +1,6 @@
 # Chat
 
-Chat is a Native mobile app for sharing messages, including photos and geolocation, developed with React Native. The app can be used on iOS and Android mobile operating systems.
+Chat is a native mobile app for sharing messages, including photos and geolocation, developed with React Native. The app can be used on iOS and Android mobile operating systems.
 
 
 
