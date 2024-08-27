@@ -66,8 +66,8 @@ const CustomActions = ({
       let result = await ImagePicker.launchImageLibraryAsync();
       if (!result.canceled) {
         await uploadAndSendImage(result.assets[0].uri);
-      } else Alert.alert("Permissions have not been granted.");
-    }
+      }
+    } else Alert.alert("Permissions have not been granted.");
   };
 
   const takePhoto = async () => {
@@ -76,8 +76,8 @@ const CustomActions = ({
       let result = await ImagePicker.launchCameraAsync();
       if (!result.canceled) {
         await uploadAndSendImage(result.assets[0].uri);
-      } else Alert.alert("Permissions have not been granted.");
-    }
+      }
+    } else Alert.alert("Permissions have not been granted.");
   };
 
   const getLocation = async () => {
