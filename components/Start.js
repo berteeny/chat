@@ -16,7 +16,7 @@ import { LogBox } from "react-native";
 LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 
 const Start = ({ navigation }) => {
-  //  colors = ["#542344", "#BFD1E5", "#EBF5EE", "#D8BFAA", "#808080"];
+  //  colors = ["#004242", "#264348", "#2f4f4f", "#367588", "#5d8aa8"];
   const auth = getAuth();
   const [name, setName] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("");
@@ -66,40 +66,40 @@ const Start = ({ navigation }) => {
                 accessibilityLabel="Background color button"
                 accessibilityHint="Lets you choose this background color"
                 accessibilityRole="button"
-                style={[styles.colorButton, { backgroundColor: "#542344" }]}
-                onPress={() => setBackgroundColor("#542344")}
+                style={[styles.colorButton, { backgroundColor: "#004242" }]}
+                onPress={() => setBackgroundColor("#004242")}
               ></TouchableOpacity>
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel="Background color button"
                 accessibilityHint="Lets you choose this background color"
                 accessibilityRole="button"
-                style={[styles.colorButton, { backgroundColor: "#BFD1E5" }]}
-                onPress={() => setBackgroundColor("#BFD1E5")}
+                style={[styles.colorButton, { backgroundColor: "#264348" }]}
+                onPress={() => setBackgroundColor("#264348")}
               ></TouchableOpacity>
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel="Background color button"
                 accessibilityHint="Lets you choose this background color"
                 accessibilityRole="button"
-                style={[styles.colorButton, { backgroundColor: "#EBF5EE" }]}
-                onPress={() => setBackgroundColor("#EBF5EE")}
+                style={[styles.colorButton, { backgroundColor: "#2f4f4f" }]}
+                onPress={() => setBackgroundColor("#2f4f4f")}
               ></TouchableOpacity>
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel="Background color button"
                 accessibilityHint="Lets you choose this background color"
                 accessibilityRole="button"
-                style={[styles.colorButton, { backgroundColor: "#D8BFAA" }]}
-                onPress={() => setBackgroundColor("#D8BFAA")}
+                style={[styles.colorButton, { backgroundColor: "#367588" }]}
+                onPress={() => setBackgroundColor("#367588")}
               ></TouchableOpacity>
               <TouchableOpacity
                 accessible={true}
                 accessibilityLabel="Background color button"
                 accessibilityHint="Lets you choose this background color"
                 accessibilityRole="button"
-                style={[styles.colorButton, { backgroundColor: "#808080" }]}
-                onPress={() => setBackgroundColor("#808080")}
+                style={[styles.colorButton, { backgroundColor: "#5d8aa8" }]}
+                onPress={() => setBackgroundColor("#5d8aa8")}
               ></TouchableOpacity>
             </View>
           </View>

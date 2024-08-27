@@ -6,7 +6,12 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
+import {
+  GiftedChat,
+  Bubble,
+  InputToolbar,
+  Time,
+} from "react-native-gifted-chat";
 import {
   collection,
   query,
@@ -15,8 +20,10 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomActions from "./CustomActions";
+import MapView from "react-native-maps";
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
   const [messages, setMessages] = useState([]);
   const { name, backgroundColor, userID } = route.params;
 
@@ -88,19 +95,70 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: "#4f3070",
+            backgroundColor: "#302b41",
           },
           left: {
-            backgroundColor: "#eed7fc",
+            backgroundColor: "#d9d2e9",
           },
         }}
       />
     );
   };
 
+  //changes color of the message times
+  const renderTime = (props) => {
+    return (
+      <Time
+        {...props}
+        timeTextStyle={{
+          left: {
+            color: "black",
+          },
+          right: {
+            color: "white",
+          },
+        }}
+      />
+    );
+  };
+  //
+
+  //removes text inout bar if no connection
   const renderInputToolbar = (props) => {
     if (isConnected === true) return <InputToolbar {...props} />;
     else return null;
+  };
+
+  //adds action menu to text input bar
+  const renderCustomActions = (props) => {
+    return (
+      <CustomActions
+        storage={storage}
+        {...props}
+        accessible={true}
+        accesssibilityLabel="More options"
+        accessibilityHint="Lets you take and send photos and your current location"
+      />
+    );
+  };
+
+  //renders mapview if location is shared
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -108,7 +166,10 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       <GiftedChat
         messages={messages}
         renderBubble={renderBubble}
+        renderTime={renderTime}
+        renderActions={renderCustomActions}
         renderInputToolbar={renderInputToolbar}
+        renderCustomView={renderCustomView}
         onSend={(messages) => onSend(messages)}
         user={{
           _id: userID,
@@ -118,9 +179,6 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       {Platform.OS === "android" ? (
         <KeyboardAvoidingView behavior="height" />
       ) : null}
-      {/* {Platform.OS === "ios" ? (
-        <KeyboardAvoidingView behavior="padding" />
-      ) : null} */}
     </View>
   );
 };
